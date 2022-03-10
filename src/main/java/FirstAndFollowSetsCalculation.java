@@ -23,13 +23,22 @@ public class FirstAndFollowSetsCalculation {
         first = new char[10];
     }
 
-    public FirstAndFollowSetsCalculation(int count) {
+    public FirstAndFollowSetsCalculation(String grammar) {
+        // Count number of lines and assign it to count
+        String[] lines = grammar.split("\r\n|\r|\n");
+        int count = lines.length;
         this.count = count;
+
         calcFirst = new char[count + 2][100];
         calcFollow = new char[count + 2][100];
         production = new char[count][10];
         f = new char[(count + 2) * 3];
         first = new char[count + 2];
+
+        int i = 0;
+        // The Input grammar
+        for (String line : lines)
+            production[i++] = line.toCharArray();
     }
 
     public void calculateFirstAndFollows() {
@@ -39,16 +48,7 @@ public class FirstAndFollowSetsCalculation {
         char c, ch;
         count = this.count;
 
-        // The Input grammar
-        production[0] = "E=TR".toCharArray();
-        production[1] = "R=+TR".toCharArray();
-        production[2] = "R=#".toCharArray();
-        production[3] = "T=FY".toCharArray();
-        production[4] = "Y=*FY".toCharArray();
-        production[5] = "Y=#".toCharArray();
-        production[6] = "F=(E)".toCharArray();
-        production[7] = "F=i".toCharArray();
-
+        System.out.println("Grammaire :");
         for (int k = 0; k < production.length; k++) {
             for (int j = 0; j < production[k].length; j++) {
                 System.out.print(production[k][j]);
@@ -88,7 +88,7 @@ public class FirstAndFollowSetsCalculation {
 
             // Adding c to the calculated list
             done[ptr] = c;
-            System.out.print("\n First(" + c + ") = { ");
+            System.out.print("\n Premier(" + c + ") = { ");
             calcFirst[point1][point2++] = c;
 
             // Printing the First Sets of the grammar
@@ -107,13 +107,13 @@ public class FirstAndFollowSetsCalculation {
                 }
             }
 
-            System.out.println("}");
+            System.out.print("}");
             jm = n;
             point1++;
         }
 
         System.out.println();
-        System.out.println("-----------------------------------------------\n");
+        System.out.println("\n-----------------------------------------------\n");
         char donee[] = new char[count];
         ptr = -1;
 
@@ -146,7 +146,7 @@ public class FirstAndFollowSetsCalculation {
 
             // Adding ck to the calculated list
             donee[ptr] = ck;
-            System.out.print(" Follow(" + ck + ") = { ");
+            System.out.print(" Suivant(" + ck + ") = { ");
             calcFollow[point1][point2++] = ck;
 
             // Printing the Follow Sets of the grammar
@@ -163,7 +163,7 @@ public class FirstAndFollowSetsCalculation {
                 }
             }
 
-            System.out.println(" }\n");
+            System.out.print(" }\n");
             km = m;
             point1++;
         }

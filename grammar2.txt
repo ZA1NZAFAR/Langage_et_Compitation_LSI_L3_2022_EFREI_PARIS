@@ -1,0 +1,5 @@
+E->TD
+D->+TD | e
+T->FY
+Y->*FY | e
+F->(E) | id
