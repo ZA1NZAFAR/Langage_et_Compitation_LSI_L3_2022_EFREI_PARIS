@@ -1,4 +1,4 @@
-S -> ABC
+S -> SABC | n
 A -> aA | #
 B -> bB | cB | #
 C -> dC | da | dA

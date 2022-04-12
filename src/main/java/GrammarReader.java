@@ -13,10 +13,12 @@ public class GrammarReader {
     private StringBuilder sb;                               // Grammar builder used upon reading an input file
     private String grammar;                                 // Grammar is stored in this variable as a one line String
     private Map<Character, List<Integer>> dictionary;       // Map used to store the indexes of replacement character (S'), used to replace duplicates later on
+    private Map<String, Character> replacements;         // Map used to track replacement characters
 
     public GrammarReader(String filename) throws IOException {
         br = new BufferedReader(new FileReader(filename));
         dictionary = new LinkedHashMap<>();
+        replacements = new LinkedHashMap<>();
 
         try {
             sb = new StringBuilder();
@@ -38,7 +40,13 @@ public class GrammarReader {
 
                         // DeRecursion. Handling every 'beta' after the pipe '|' character
                         while (index >= 0) {
-                            production = line.charAt(0) + "=" + line.substring(index + 1, ((line.indexOf('|', index + 1) == -1) ? line.length() : (line.indexOf('|', index + 1)))) + character;
+                            String beta = line.substring(index + 1, ((line.indexOf('|', index + 1) == -1) ? line.length() : (line.indexOf('|', index + 1))));
+                            for (int i = 0; i < beta.length(); i++) {
+                                if (Character.isUpperCase(beta.charAt(i)))
+                                    throw new IllegalArgumentException("Le beta contient le non-terminal!");
+                            }
+
+                            production = line.charAt(0) + "=" + beta + character;
 
                             // Storing the indexes of the replacement character (S -> S')
                             if (dictionary.get(character) != null) {
@@ -64,6 +72,8 @@ public class GrammarReader {
                         dictionary.get(character).add(sb.length());
                         production = character + "=#";
                         sb.append(production);
+
+                        replacements.put(line.charAt(0) + "\'", character);
 
                     } else if (line.indexOf('|') != -1) {
                         // Form two lines from one if the line contains '|' symbol. E.g.: R=+TR|# would result in: 1) R=+TR and 2) R=#
@@ -116,7 +126,8 @@ public class GrammarReader {
     }
 
     public String getGrammar() {
-        System.out.println(dictionary.keySet().toString() + " sont des non terminaux remplaces lors de derecursivation, # - represente l'epsilon");
+        System.out.println("On reconnait la formule de recursivite gauche :\nA -> Aα | β\nOn applique donc la formule de derecursivation :\nA -> βA'\nA'-> αA' | ε");
+        System.out.println(replacements.entrySet() + " sont des non terminaux remplaces lors de derecursivation, # - represente l'epsilon");
         return grammar;
     }
 }
