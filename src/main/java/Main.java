@@ -5,7 +5,7 @@ public class Main {
         String grammar = "";
 
         try {
-            GrammarReader grammarReader = new GrammarReader("grammar1.txt");
+            GrammarReader grammarReader = new GrammarReader("grammar3.txt");
             grammar = grammarReader.getGrammar();
         } catch (IOException e) {
             System.out.println("Failed to read an input grammar file: " + e.getMessage());

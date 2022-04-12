@@ -33,7 +33,7 @@ public class FirstAndFollowSetsCalculation {
         calcFollow = new char[count + 2][100];
         production = new char[count][10];
         f = new char[(count + 2) * 3];
-        first = new char[count + 2];
+        first = new char[count * 2];
 
         int i = 0;
         // The Input grammar
