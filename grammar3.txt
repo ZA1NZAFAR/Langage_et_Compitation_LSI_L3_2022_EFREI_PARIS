@@ -1,4 +1,4 @@
 S -> SABC | n
-A -> aA | #
-B -> bB | cB | #
+A -> aA | eps
+B -> bB | cB | eps
 C -> dC | da | dA

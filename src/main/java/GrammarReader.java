@@ -126,8 +126,8 @@ public class GrammarReader {
     }
 
     public String getGrammar() {
-        System.out.println("On reconnait la formule de recursivite gauche :\nA -> Aα | β\nOn applique donc la formule de derecursivation :\nA -> βA'\nA'-> αA' | ε");
-        System.out.println(replacements.entrySet() + " sont des non terminaux remplaces lors de derecursivation, # - represente l'epsilon");
+        System.out.println("On reconnait la formule de recursivite gauche :\nA -> Aα | β\nOn applique donc la formule de derecursification :\nA -> βA'\nA'-> αA' | ε");
+        System.out.println(replacements.entrySet() + " sont des non terminaux remplaces lors de derecursification, # - represente l'eps");
         return grammar;
     }
 }

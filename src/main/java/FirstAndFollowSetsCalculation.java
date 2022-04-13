@@ -210,7 +210,7 @@ public class FirstAndFollowSetsCalculation {
                     if (q2 == production[q1].length)
                         first[n++] = '#';
                     else if (q2 != production[q1].length && (q1 != 0 || q2 != 0)) {
-                        // Recursion to calculate First of New Non-Terminal we encounter after epsilon
+                        // Recursion to calculate First of New Non-Terminal we encounter after eps
                         findfirst(production[q1][q2], q1, (q2 + 1));
                     } else
                         first[n++] = '#';
