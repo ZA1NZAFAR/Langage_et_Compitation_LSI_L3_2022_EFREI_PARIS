@@ -21,18 +21,15 @@ public class Regle {
 
     @Override
     public String toString() {
-        return "\n" + left + " --> " + right;
+        return left + " --> " + right;
+    }
+
+    public String[] getSymboles() {
+        String[] symbols = new String[right.size() + 1];
+        for (int i = 0; i < right.size(); i++) {
+            symbols[i] = right.get(i);
+        }
+        symbols[right.size()] = left;
+        return symbols;
     }
 }
-
-//S=nT
-//T=ABCT
-//T=#
-//A=aA
-//A=#
-//B=bB
-//B=cB
-//B=#
-//C=dC
-//C=da
-//C=dA

@@ -1,5 +1,5 @@
 E -> TR
 R -> +TR| eps
 T -> FY
-Y -> *F Y | eps
+Y -> *FY | eps
 F -> (E) | i

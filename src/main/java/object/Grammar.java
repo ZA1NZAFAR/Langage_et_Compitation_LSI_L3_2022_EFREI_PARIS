@@ -34,6 +34,14 @@ public class Grammar {
         return regles;
     }
 
+    public String getStartSymbol() {
+        return startSymbol;
+    }
+
+    public void setStartSymbol(String s) {
+        this.startSymbol = s;
+    }
+
     public List<Regle> getAllProductionsOf(String nonTerminal) {
         List<Regle> regles = new java.util.ArrayList<>();
         for (Regle regle : this.regles) {
@@ -69,11 +77,27 @@ public class Grammar {
                 "\n}";
     }
 
-    public String getStartSymbol() {
-        return startSymbol;
+    public void setTerminals(List<String> terminals) {
+        this.terminals = terminals;
     }
 
-    public void setStartSymbol(String s) {
-        this.startSymbol = s;
+    public List<String> getNonTerminals() {
+        return nonTerminals;
+    }
+
+    public void setNonTerminals(List<String> nonTerminals) {
+        this.nonTerminals = nonTerminals;
+    }
+
+    public List<Regle> getRegles() {
+        return regles;
+    }
+
+    public void setRegles(List<Regle> regles) {
+        this.regles = regles;
+    }
+
+    public void addTerminal(String $) {
+        this.terminals.add($);
     }
 }

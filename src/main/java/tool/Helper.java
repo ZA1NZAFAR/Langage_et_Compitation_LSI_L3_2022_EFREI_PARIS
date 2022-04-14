@@ -2,34 +2,22 @@ package tool;
 
 import object.Grammar;
 import object.Regle;
+import object.Table;
+import object.TableCell;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
+
+import static tool.Tools.isTerminal;
 
 public class Helper {
 
-    private boolean isTerminal(String symbol) {
-        return !symbol.matches("[A-Z]|[A-Z]'");
-    }
-
-    private List<String> concatenate(List<String> list1, String s) {
-        List<String> result = new ArrayList<>(list1);
-        result.add(s);
-        return result;
-    }
-
-
-    private Set<String> removeEpsilon(Set<String> list) {
-        Set<String> result = new HashSet<>(list);
-        result.remove("eps");
-        return result;
-    }
-
-    // Derecurssivation
-    public Grammar derecursification(Grammar grammar) {
+    /**
+     * Checks if a rule is a left recursion rule and removes it from the grammar
+     *
+     * @param grammar the grammar to check
+     * @return the grammar without left recursion rules
+     */
+    public Grammar removeRecursion(Grammar grammar) {
         Grammar newGrammar = grammar.getCopy();
         List<Regle> result;
         for (Regle regle : grammar.getProductions()) {
@@ -39,9 +27,9 @@ public class Helper {
                 newGrammar.deleteAllProductionsFor(regle.left);
                 for (Regle p : toDiscursiveness) {
                     if (p.right.size() == 1) {
-                        result.add(new Regle(p.left, concatenate(p.right, regle.left + "'")));
+                        result.add(new Regle(p.left, Tools.concatenate(p.right, regle.left + "'")));
                     } else if (p.right.size() > 1 && p.right.get(0).equals(regle.left)) {
-                        result.add(new Regle(p.left + "'", concatenate(p.right.subList(1, p.right.size()), p.left + "'")));
+                        result.add(new Regle(p.left + "'", Tools.concatenate(p.right.subList(1, p.right.size()), p.left + "'")));
                     }
                 }
                 result.add(new Regle(regle.left + "'", Collections.singletonList("eps")));
@@ -52,8 +40,12 @@ public class Helper {
         return newGrammar;
     }
 
-
-    // Calculate Firsts for all nonterminals in grammar
+    /**
+     * Calculates the follows for all nonTerminals in a grammar and returns them in a HashMap with the key being the nonTerminal
+     *
+     * @param grammar the grammar to calculate the follows for
+     * @return a HashMap with the key being the nonTerminal and the value being the follows
+     */
     public HashMap<String, Set<String>> calculateFirsts(Grammar grammar) {
         HashMap<String, Set<String>> firsts = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
@@ -62,6 +54,14 @@ public class Helper {
         return firsts;
     }
 
+    /**
+     * Calculates the firsts for a nonTerminal in a grammar and returns them in a HashSet
+     *
+     * @param left    the nonTerminal to calculate the firsts for
+     * @param regles  the grammar to calculate the firsts for
+     * @param grammar the grammar to calculate the firsts for
+     * @return a HashSet with the firsts of the nonTerminal
+     */
     public Set<String> calculateFirsts(String left, List<Regle> regles, Grammar grammar) {
         Set<String> firsts = new HashSet<>();
         for (Regle regle : regles) {
@@ -82,7 +82,12 @@ public class Helper {
     }
 
 
-    // Calculate Follows for all nonterminals in grammar
+    /**
+     * Calculates the follows for all nonTerminals in a grammar and returns them in a HashMap with the key being the nonTerminal
+     *
+     * @param grammar the grammar to calculate the follows for
+     * @return a HashMap with the key being the nonTerminal and the value being the follows
+     */
     public HashMap<String, Set<String>> calculateFollows(Grammar grammar) {
         HashMap<String, Set<String>> follows = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
@@ -91,10 +96,20 @@ public class Helper {
         return follows;
     }
 
+    /**
+     * Calculates the follows for a nonTerminal in a grammar and returns them in a HashSet
+     *
+     * @param symbol  the nonTerminal to calculate the follows for
+     * @param regles  the grammar to calculate the follows for
+     * @param grammar the grammar to calculate the follows for
+     * @return a HashSet with the follows of the nonTerminal
+     */
     public Set<String> calculateFollows(String symbol, List<Regle> regles, Grammar grammar) {
         Set<String> follows = new HashSet<>();
-        if (symbol.equals(grammar.getStartSymbol()))
+        if (symbol.equals(grammar.getStartSymbol())) {
             follows.add("$");
+            grammar.addTerminal("$");
+        }
         for (Regle regle : regles) {
             for (int i = 0; i < regle.right.size(); i++) {
                 if (regle.right.get(i).equals(symbol)) {
@@ -114,14 +129,14 @@ public class Helper {
                                 //if all symbols following the current symbol can dissapear then add follows of left side
                                 for (int j = i + 1; j < regle.right.size(); j++) {
                                     if (j == regle.right.size() - 1) {
-                                        follows.addAll(removeEpsilon(calculateFollows(regle.left, regles, grammar)));
+                                        follows.addAll(Tools.removeEpsilon(calculateFollows(regle.left, regles, grammar)));
                                     }
-                                    if(!grammar.doesGiveEpsilon(regle.right.get(j)))
+                                    if (!grammar.doesGiveEpsilon(regle.right.get(j)))
                                         break;
                                 }
 
                                 // if surrent symbol can dissapear we also take the firsts of the next symbol
-                                follows.addAll(removeEpsilon(calculateFirsts(s, regles, grammar)));
+                                follows.addAll(Tools.removeEpsilon(calculateFirsts(s, regles, grammar)));
                                 if (!grammar.doesGiveEpsilon(s))
                                     break;
                             }
@@ -134,29 +149,35 @@ public class Helper {
     }
 
 
-    public Grammar readFileToGrammer(String fileName) throws FileNotFoundException {
-        Grammar grammar = new Grammar();
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
-        try {
-            String line = br.readLine();
-            grammar.setStartSymbol(String.valueOf(line.charAt(0)));
-            while (line != null) {
-                if (line.contains("->")) {
-                    String[] firstCut = line.split("->");
-                    String[] secondCut = firstCut[1].split("\\|");
-                    for (String part : secondCut) {
-                        if (part.contains("eps"))
-                            grammar.getProductions().add(new Regle(firstCut[0].trim(), com.sun.tools.javac.util.List.of("eps")));
-                        else
-                            grammar.getProductions().add(new Regle(firstCut[0].trim(), Arrays.asList(part.trim().split(""))));
-                    }
+    public Table getDescendingAnalyzerTable(Grammar grammar, HashMap<String, Set<String>> firsts, HashMap<String, Set<String>> follows) {
+        Table table = new Table(new ArrayList<>());
+        for (Regle regle : grammar.getProductions()) {
+            if (regle.right.get(0).equals("eps")) {
+                for (String s : follows.get(regle.getLeft())) {
+                    TableCell tmp = new TableCell(regle.getLeft(), s, regle);
+                    if (table.containsCouple(regle.getLeft(), s))
+                        throw new RuntimeException("There can't be two rules with the same left side and first");
+                    else
+                        table.add(tmp);
                 }
-                line = br.readLine();
+                continue;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (isTerminal(regle.getRight().get(0))) {
+                TableCell tmp = new TableCell(regle.getLeft(), regle.getRight().get(0), regle);
+                if (table.containsCouple(regle.getLeft(), regle.getRight().get(0)))
+                    throw new RuntimeException("There can't be two rules with the same left side and first");
+                else
+                    table.add(tmp);
+                continue;
+            }
+            for (String s : firsts.get(regle.getRight().get(0))) {
+                TableCell tmp = new TableCell(regle.getLeft(), s, regle);
+                if (table.containsCouple(regle.getLeft(), s))
+                    throw new RuntimeException("There can't be two rules with the same left side and first");
+                else
+                    table.add(tmp);
+            }
         }
-        return grammar;
+        return table;
     }
-
 }
