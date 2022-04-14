@@ -42,6 +42,7 @@ public class Grammar {
         this.startSymbol = s;
     }
 
+
     public List<Regle> getAllProductionsOf(String nonTerminal) {
         List<Regle> regles = new java.util.ArrayList<>();
         for (Regle regle : this.regles) {
@@ -60,6 +61,12 @@ public class Grammar {
         return new Grammar(startSymbol, new ArrayList<>(this.terminals), new ArrayList<>(this.nonTerminals), new ArrayList<>(this.regles));
     }
 
+    /**
+     * Return true of the given non terminal gives an epislon production
+     *
+     * @param nonTerminal the non terminal
+     * @return true if the non terminal gives an epislon production
+     */
     public boolean doesGiveEpsilon(String nonTerminal) {
         for (Regle regle : this.regles)
             if (regle.getLeft().equals(nonTerminal) && regle.getRight().get(0).equals("eps"))
