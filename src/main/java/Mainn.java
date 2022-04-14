@@ -12,7 +12,6 @@ public class Mainn {
         Helper helper = new Helper();
         Grammar grammer = Tools.readFileToGrammar("grammar.txt");
         grammer = helper.removeRecursion(grammer);
-
         System.out.println("Grammaire : \n" + grammer + "\n");
 
         HashMap<String, Set<String>> firsts = helper.calculateFirsts(grammer);
