@@ -1,4 +1,4 @@
-package ZZ;
+package object;
 
 import java.util.List;
 

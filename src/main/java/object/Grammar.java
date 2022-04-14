@@ -1,4 +1,4 @@
-package ZZ;
+package object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +62,7 @@ public class Grammar {
     @Override
     public String toString() {
         return "\nGrammer{" +
+                "Start Symbole=" + startSymbol +
                 "terminals=" + terminals +
                 ", nonTerminals=" + nonTerminals +
                 ", productions=" + regles +
@@ -70,5 +71,9 @@ public class Grammar {
 
     public String getStartSymbol() {
         return startSymbol;
+    }
+
+    public void setStartSymbol(String s) {
+        this.startSymbol = s;
     }
 }

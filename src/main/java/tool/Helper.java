@@ -1,5 +1,12 @@
-package ZZ;
+package tool;
 
+import object.Grammar;
+import object.Regle;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 public class Helper {
@@ -125,4 +132,31 @@ public class Helper {
         }
         return follows;
     }
+
+
+    public Grammar readFileToGrammer(String fileName) throws FileNotFoundException {
+        Grammar grammar = new Grammar();
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        try {
+            String line = br.readLine();
+            grammar.setStartSymbol(String.valueOf(line.charAt(0)));
+            while (line != null) {
+                if (line.contains("->")) {
+                    String[] firstCut = line.split("->");
+                    String[] secondCut = firstCut[1].split("\\|");
+                    for (String part : secondCut) {
+                        if (part.contains("eps"))
+                            grammar.getProductions().add(new Regle(firstCut[0].trim(), com.sun.tools.javac.util.List.of("eps")));
+                        else
+                            grammar.getProductions().add(new Regle(firstCut[0].trim(), Arrays.asList(part.trim().split(""))));
+                    }
+                }
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return grammar;
+    }
+
 }
