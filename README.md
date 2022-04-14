@@ -12,11 +12,11 @@ Le fichier contient l'ensemble des règles pour la grammaire.
 Plusieurs règles peuvent être combinées en utilisant '|'.
 
 ## Quelques exemples des règles 
-A -> BS
-A -> sA
-A -> s
+ - A -> BS
+ - A -> sA
+ - A -> s
 
-A -> BS | sA | s
+ - A -> BS | sA | s
 
 ### Note: La décursification est détectée et traitée automatiquement
 
