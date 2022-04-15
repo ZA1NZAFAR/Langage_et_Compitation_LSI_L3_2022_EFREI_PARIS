@@ -26,9 +26,9 @@ public class Helper {
                 List<Regle> toDiscursiveness = grammar.getAllProductionsOf(regle.left);
                 newGrammar.deleteAllProductionsFor(regle.left);
                 for (Regle p : toDiscursiveness) {
-                    if (p.right.size() == 1) {
+                    if (!p.right.get(0).equals(regle.left)) {
                         result.add(new Regle(p.left, Tools.concatenate(p.right, regle.left + "'")));
-                    } else if (p.right.size() > 1 && p.right.get(0).equals(regle.left)) {
+                    } else {
                         result.add(new Regle(p.left + "'", Tools.concatenate(p.right.subList(1, p.right.size()), p.left + "'")));
                     }
                 }
@@ -70,7 +70,7 @@ public class Helper {
                     firsts.add(regle.getRight().get(0));
                 } else {
                     for (String s : regle.right) {
-                        if (!isTerminal(s))
+                        if (!isTerminal(s) && !s.equals(left))
                             firsts.addAll(calculateFirsts(s, regles, grammar));
                         if (!grammar.doesGiveEpsilon(s))
                             break;
@@ -135,7 +135,7 @@ public class Helper {
                                         break;
                                 }
 
-                                // if surrent symbol can dissapear we also take the firsts of the next symbol
+                                // if current symbol can dissapear we also take the firsts of the next symbol
                                 follows.addAll(Tools.removeEpsilon(calculateFirsts(s, regles, grammar)));
                                 if (!grammar.doesGiveEpsilon(s))
                                     break;
@@ -162,6 +162,8 @@ public class Helper {
                 }
                 continue;
             }
+
+            //S > Tps
             if (isTerminal(regle.getRight().get(0))) {
                 TableCell tmp = new TableCell(regle.getLeft(), regle.getRight().get(0), regle);
                 if (table.containsCouple(regle.getLeft(), regle.getRight().get(0)))

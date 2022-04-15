@@ -10,7 +10,7 @@ import java.util.Set;
 public class Mainn {
     public static void main(String[] args) throws FileNotFoundException {
         Helper helper = new Helper();
-        Grammar grammer = Tools.readFileToGrammar("grammar.txt");
+        Grammar grammer = Tools.readFileToGrammar("grammar1.txt");
         grammer = helper.removeRecursion(grammer);
         System.out.println("Grammaire : \n" + grammer + "\n");
 

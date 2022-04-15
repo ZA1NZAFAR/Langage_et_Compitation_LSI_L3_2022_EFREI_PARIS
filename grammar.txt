@@ -1,2 +1,1 @@
-S -> (L) | a
-L -> LxS | S
+E -> EvEc | y | x | z
