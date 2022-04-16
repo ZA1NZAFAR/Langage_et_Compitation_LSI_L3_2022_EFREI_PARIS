@@ -19,7 +19,8 @@ public class Mainn {
 
         while (true) {
             System.out.println(
-                    "Type 0 to exit" +
+                    "Main Menu: " +
+                            "\n0 to exit" +
                             "\n1 to read a new file" +
                             "\n2 to calculate firsts" +
                             "\n3 to calculate follows" +
