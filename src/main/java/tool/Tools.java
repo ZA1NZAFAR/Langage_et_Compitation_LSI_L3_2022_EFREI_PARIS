@@ -178,15 +178,12 @@ public class Tools {
     public static void displayTable(Table table, Grammar grammar) {
         displayLoading("Generating table");
         String format = "%-20.20s";  // fixed size 10 characters, left aligned
-        System.out.println(grammar.getNonTerminals());
-        System.out.println(grammar.getTerminals());
 
         System.out.format(format, " ");
         for (String nonTerminal : grammar.getTerminals()) {
             System.out.format(format, nonTerminal);
         }
         System.out.println();
-
         for (String terminal : grammar.getNonTerminals()) {
             System.out.format(format, terminal);
             for (String nonTerminal : grammar.getTerminals()) {
