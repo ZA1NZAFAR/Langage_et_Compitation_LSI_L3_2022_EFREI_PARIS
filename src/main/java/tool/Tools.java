@@ -133,4 +133,16 @@ public class Tools {
         return tmp;
     }
 
+    public static void displayLoading(String message) {
+        System.out.print("\n" + message + "...");
+        for (int i = 0; i < 20; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException ignored) {
+            }
+        }
+        System.out.println();
+    }
+
 }

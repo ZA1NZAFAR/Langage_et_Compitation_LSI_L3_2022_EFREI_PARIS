@@ -18,6 +18,7 @@ public class Helper {
      * @return the grammar without left recursion rules
      */
     public Grammar removeRecursion(Grammar grammar) {
+        Tools.displayLoading("Removing left recursion");
         Grammar newGrammar = grammar.getCopy();
         List<Regle> result;
         for (Regle regle : grammar.getProductions()) {
@@ -47,6 +48,7 @@ public class Helper {
      * @return a HashMap with the key being the nonTerminal and the value being the follows
      */
     public HashMap<String, Set<String>> calculateFirsts(Grammar grammar) {
+        Tools.displayLoading("Calculating firsts");
         HashMap<String, Set<String>> firsts = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
             firsts.put(regle.getLeft(), calculateFirsts(regle.getLeft(), grammar.getProductions(), grammar));
@@ -89,6 +91,7 @@ public class Helper {
      * @return a HashMap with the key being the nonTerminal and the value being the follows
      */
     public HashMap<String, Set<String>> calculateFollows(Grammar grammar) {
+        Tools.displayLoading("Calculating follows");
         HashMap<String, Set<String>> follows = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
             follows.put(regle.getLeft(), calculateFollows(regle.getLeft(), grammar.getProductions(), grammar));
@@ -150,6 +153,7 @@ public class Helper {
 
 
     public Table getDescendingAnalyzerTable(Grammar grammar, HashMap<String, Set<String>> firsts, HashMap<String, Set<String>> follows) {
+        Tools.displayLoading("Calculating descending analyzer table");
         Table table = new Table(new ArrayList<>());
         for (Regle regle : grammar.getProductions()) {
             if (regle.right.get(0).equals("eps")) {
@@ -184,6 +188,7 @@ public class Helper {
     }
 
     public void wordIsKnown(Table table, String word) {
+        Tools.displayLoading("Launching word analysis");
         Stack<String> pile = new Stack<>();
         pile.push("$");
         pile.push("E");
