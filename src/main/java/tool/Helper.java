@@ -18,12 +18,12 @@ public class Helper {
      * @return the grammar without left recursion rules
      */
     public Grammar removeRecursion(Grammar grammar) {
-        Tools.displayLoading("Removing left recursion");
         Grammar newGrammar = grammar.getCopy();
         List<Regle> result;
         for (Regle regle : grammar.getProductions()) {
             result = new ArrayList<>();
             if (regle.left.equals(regle.right.get(0))) {
+                Tools.displayLoading("Left Recursion Detected!\nRemoving left recursion");
                 List<Regle> toDiscursiveness = grammar.getAllProductionsOf(regle.left);
                 newGrammar.deleteAllProductionsFor(regle.left);
                 for (Regle p : toDiscursiveness) {
@@ -186,7 +186,7 @@ public class Helper {
     }
 
     public void wordIsKnown(Table table, String word) {
-        Tools.displayLoading("Launching word analysis");
+        Tools.displayLoading("Launching word analysis for " + word);
         Stack<String> pile = new Stack<>();
         pile.push("$");
         pile.push("E");

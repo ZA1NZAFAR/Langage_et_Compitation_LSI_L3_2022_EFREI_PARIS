@@ -79,6 +79,7 @@ public class Tools {
         }
         grammar.setTerminals(Tools.getTerminals(grammar));
         grammar.setNonTerminals(Tools.getNonTerminals(grammar));
+        grammar = new Helper().removeRecursion(grammar);
         return grammar;
     }
 
@@ -144,11 +145,11 @@ public class Tools {
         for (int i = 0; i < 20; i++) {
             System.out.print(".");
             try {
-                Thread.sleep(1);
+                Thread.sleep((int) Math.floor(Math.random() * (100 - 50 + 1) + 50));
             } catch (InterruptedException ignored) {
             }
         }
-        System.out.println();
+        System.out.println("Success!");
     }
 
     /**
@@ -197,10 +198,32 @@ public class Tools {
         }
     }
 
+    /**
+     * Displays first or follow sets for the given grammar
+     *
+     * @param firstsOrFollows the first or follow sets to display
+     * @param firsts          firsts or follow
+     */
     public static void displayFirstsOrFollows(String firstsOrFollows, HashMap<String, Set<String>> firsts) {
-        displayLoading("Calculation " + firstsOrFollows);
+        displayLoading("Calculating " + firstsOrFollows);
+        System.out.println(firstsOrFollows + " : ");
         for (String key : firsts.keySet()) {
             System.out.println(key + " : " + firsts.get(key));
+        }
+    }
+
+    /**
+     * Displays the given grammar
+     *
+     * @param grammar the grammar to display
+     */
+    public static void displayGrammar(Grammar grammar) {
+        displayLoading("Generating grammar");
+        System.out.println("Terminals : " + grammar.getNonTerminals());
+        System.out.println("Non Terminals : " + grammar.getTerminals());
+        System.out.println("Productions : ");
+        for (Regle regle : grammar.getRegles()) {
+            System.out.println(regle.left + " -> " + regle.right);
         }
     }
 }

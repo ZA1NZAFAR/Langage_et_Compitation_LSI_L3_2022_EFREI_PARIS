@@ -10,20 +10,18 @@ import java.util.Set;
 public class Mainn {
     public static void main(String[] args) throws FileNotFoundException {
         Helper helper = new Helper();
-        Grammar grammer = Tools.readFileToGrammar("grammar1.txt");
-        grammer = helper.removeRecursion(grammer);
-        System.out.println("Grammaire : \n" + grammer + "\n");
+        Grammar grammar = Tools.readFileToGrammar("grammar1.txt");
+        Tools.displayGrammar(grammar);
 
-        HashMap<String, Set<String>> firsts = helper.calculateFirsts(grammer);
+        HashMap<String, Set<String>> firsts = helper.calculateFirsts(grammar);
         Tools.displayFirstsOrFollows("Firsts", firsts);
 
-        HashMap<String, Set<String>> follows = helper.calculateFollows(grammer);
-        Tools.displayFirstsOrFollows("Follows", firsts);
+        HashMap<String, Set<String>> follows = helper.calculateFollows(grammar);
+        Tools.displayFirstsOrFollows("Follows", follows);
 
-        Table descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammer, firsts, follows);
-        Tools.displayTable(descendingAnalyzerTable, grammer);
+        Table descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
+        Tools.displayTable(descendingAnalyzerTable, grammar);
 
-        System.out.println("Word is known? : ");
         helper.wordIsKnown(descendingAnalyzerTable, "(((i)))");
     }
 }
