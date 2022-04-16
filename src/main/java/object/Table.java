@@ -18,6 +18,15 @@ public class Table {
         return false;
     }
 
+    public TableCell getRegleForCouple(String terminal, String nonTerminal) {
+        for (TableCell cell : cells) {
+            if (cell.terminal.equals(terminal) && cell.nonTerminal.equals(nonTerminal)) {
+                return cell;
+            }
+        }
+        return null;
+    }
+
     public void add(TableCell tmp) {
         cells.add(tmp);
     }

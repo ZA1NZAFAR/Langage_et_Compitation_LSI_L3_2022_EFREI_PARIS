@@ -22,5 +22,8 @@ public class Mainn {
 
         Table descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammer, firsts, follows);
         System.out.println("Table : \n" + descendingAnalyzerTable + "\n");
+
+        System.out.println("Word is known? : ");
+        helper.wordIsKnown(descendingAnalyzerTable, "(((i)))");
     }
 }
