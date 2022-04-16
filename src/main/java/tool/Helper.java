@@ -48,7 +48,6 @@ public class Helper {
      * @return a HashMap with the key being the nonTerminal and the value being the follows
      */
     public HashMap<String, Set<String>> calculateFirsts(Grammar grammar) {
-        Tools.displayLoading("Calculating firsts");
         HashMap<String, Set<String>> firsts = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
             firsts.put(regle.getLeft(), calculateFirsts(regle.getLeft(), grammar.getProductions(), grammar));
@@ -91,7 +90,6 @@ public class Helper {
      * @return a HashMap with the key being the nonTerminal and the value being the follows
      */
     public HashMap<String, Set<String>> calculateFollows(Grammar grammar) {
-        Tools.displayLoading("Calculating follows");
         HashMap<String, Set<String>> follows = new HashMap<>();
         for (Regle regle : grammar.getProductions()) {
             follows.put(regle.getLeft(), calculateFollows(regle.getLeft(), grammar.getProductions(), grammar));
@@ -111,7 +109,8 @@ public class Helper {
         Set<String> follows = new HashSet<>();
         if (symbol.equals(grammar.getStartSymbol())) {
             follows.add("$");
-            grammar.addTerminal("$");
+            if (!grammar.getTerminals().contains("$"))
+                grammar.addTerminal("$");
         }
         for (Regle regle : regles) {
             for (int i = 0; i < regle.right.size(); i++) {
@@ -153,7 +152,6 @@ public class Helper {
 
 
     public Table getDescendingAnalyzerTable(Grammar grammar, HashMap<String, Set<String>> firsts, HashMap<String, Set<String>> follows) {
-        Tools.displayLoading("Calculating descending analyzer table");
         Table table = new Table(new ArrayList<>());
         for (Regle regle : grammar.getProductions()) {
             if (regle.right.get(0).equals("eps")) {

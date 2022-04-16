@@ -2,6 +2,7 @@ package tool;
 
 import object.Grammar;
 import object.Regle;
+import object.Table;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -139,11 +140,11 @@ public class Tools {
      * @param message the message to display
      */
     public static void displayLoading(String message) {
-        System.out.print("\n" + message + "...");
+        System.out.print(message + "...");
         for (int i = 0; i < 20; i++) {
             System.out.print(".");
             try {
-                Thread.sleep(50);
+                Thread.sleep(1);
             } catch (InterruptedException ignored) {
             }
         }
@@ -167,4 +168,39 @@ public class Tools {
         System.out.println();
     }
 
+    /**
+     * Displays the given analysis table
+     *
+     * @param table   the table to display
+     * @param grammar the grammar used to generate the table
+     */
+    public static void displayTable(Table table, Grammar grammar) {
+        displayLoading("Generating table");
+        String format = "%-20.20s";  // fixed size 10 characters, left aligned
+        System.out.println(grammar.getNonTerminals());
+        System.out.println(grammar.getTerminals());
+
+        System.out.format(format, " ");
+        for (String nonTerminal : grammar.getTerminals()) {
+            System.out.format(format, nonTerminal);
+        }
+        System.out.println();
+
+        for (String terminal : grammar.getNonTerminals()) {
+            System.out.format(format, terminal);
+            for (String nonTerminal : grammar.getTerminals()) {
+                System.out.format(format, table.getRegleForCouple(terminal, nonTerminal) == null ? "" : table.getRegleForCouple(terminal, nonTerminal).regle.right);
+                System.out.print("");
+
+            }
+            System.out.println();
+        }
+    }
+
+    public static void displayFirstsOrFollows(String firstsOrFollows, HashMap<String, Set<String>> firsts) {
+        displayLoading("Calculation " + firstsOrFollows);
+        for (String key : firsts.keySet()) {
+            System.out.println(key + " : " + firsts.get(key));
+        }
+    }
 }

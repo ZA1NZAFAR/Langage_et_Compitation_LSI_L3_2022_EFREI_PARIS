@@ -37,4 +37,8 @@ public class Table {
                 "cells=" + cells +
                 '}';
     }
+
+    public List<TableCell> getCells() {
+        return cells;
+    }
 }
