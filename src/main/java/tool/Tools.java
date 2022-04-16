@@ -133,15 +133,37 @@ public class Tools {
         return tmp;
     }
 
+    /**
+     * Display a message followed by a little loading animation
+     *
+     * @param message the message to display
+     */
     public static void displayLoading(String message) {
         System.out.print("\n" + message + "...");
         for (int i = 0; i < 20; i++) {
             System.out.print(".");
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             } catch (InterruptedException ignored) {
             }
         }
+        System.out.println();
+    }
+
+    /**
+     * Align given strings (first string 80 characters long, second string 60 characters long, third string 30 characters long)
+     *
+     * @param stack  the stack to align
+     * @param word   the word to align
+     * @param result the result to align
+     */
+    public static void alignAndDisplay(String stack, String word, String result) {
+        String column1Format = "%-80.80s";  // fixed size 80 characters, left aligned
+        String column2Format = "%-50.50s";  // fixed size 50 characters, left aligned
+        String column3Format = "%30.30s";   // fixed size 30 characters, right aligned
+        String formatInfo = column1Format + " " + column2Format + " " + column3Format;
+
+        System.out.format(formatInfo, stack, word, result);
         System.out.println();
     }
 

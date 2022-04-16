@@ -197,7 +197,8 @@ public class Helper {
         Stack<String> lastTurnPile = new Stack<>();
         Stack<String> lastTurnWordPile = new Stack<>();
 
-        System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
+        Tools.alignAndDisplay("Pile", "Mot", "Regle");
+        Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
         while (!pile.isEmpty()) {
             // if both stacks haven't changed since the last turn we have a loop so the word is not known
             if (lastTurnPile.equals(pile) && lastTurnWordPile.equals(wordPile)) {
@@ -211,28 +212,29 @@ public class Helper {
 
             if (pile.peek().equals("eps")) {
                 pile.pop();
-                System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
+
             }
             // if one pile is empty and the other isn't  the word is not known
             if ((pile.isEmpty() && !wordPile.isEmpty()) || (!pile.isEmpty() && wordPile.isEmpty())) {
-                System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
                 System.out.println("The word is not known");
                 return;
             }
             // if the top of the pile is a terminal but the top of the word pile isn't the same we have a problem the word is not known
             if (isTerminal(pile.peek()) && !pile.peek().equals(wordPile.peek())) {
-                System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
                 System.out.println("The word is not known");
                 return;
             }
             // if the top of the pile is a terminal and the top of the word pile is the same we pop the pile and the word pile
             if (pile.peek().equals(wordPile.peek())) {
-                System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile + "\t\t\t\t\t\t\t\t\tOOOUUUFFFFF");
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
                 pile.pop();
                 wordPile.pop();
                 // When both piles are empty we have a word
                 if (pile.isEmpty() && wordPile.isEmpty()) {
-                    System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
+                    Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
                     System.out.println("The word is accepted");
                     return;
                 }
@@ -246,7 +248,8 @@ public class Helper {
                         pile.push(tmp.regle.right.get(i));
                     }
                 }
-                System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile + "\t\t\t\t\t\t\t\t\t" + tmp.regle);
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), tmp.regle.toString());
+
             }
         }
     }
