@@ -117,4 +117,20 @@ public class Tools {
         return new ArrayList<>(result);
     }
 
+    /**
+     * Returns a stack of the given word
+     *
+     * @param word the word to get the stack from
+     * @return a stack of the given word
+     */
+    public static Stack<String> wordToStack(String word) {
+        Stack<String> tmp = new Stack<>();
+        tmp.push("$");
+        for (int i = word.length() - 1; i >= 0; i--) {
+            if (word.charAt(i) != ' ')
+                tmp.push(word.charAt(i) + "");
+        }
+        return tmp;
+    }
+
 }

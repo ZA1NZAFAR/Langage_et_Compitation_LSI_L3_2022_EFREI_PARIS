@@ -187,33 +187,55 @@ public class Helper {
         Stack<String> pile = new Stack<>();
         pile.push("$");
         pile.push("E");
-        Stack<String> wordPile = wordToStack(word);
+        Stack<String> wordPile = Tools.wordToStack(word);
+
+        Stack<String> lastTurnPile = new Stack<>();
+        Stack<String> lastTurnWordPile = new Stack<>();
 
         System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
         while (!pile.isEmpty()) {
+            // if both stacks haven't changed since the last turn we have a loop so the word is not known
+            if (lastTurnPile.equals(pile) && lastTurnWordPile.equals(wordPile)) {
+                System.out.println("The word is not known");
+                return;
+            }
+            lastTurnPile.clear();
+            lastTurnWordPile.clear();
+            lastTurnPile.addAll(pile);
+            lastTurnWordPile.addAll(wordPile);
+
             if (pile.peek().equals("eps")) {
                 pile.pop();
                 System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
             }
+            // if one pile is empty and the other isn't  the word is not known
             if ((pile.isEmpty() && !wordPile.isEmpty()) || (!pile.isEmpty() && wordPile.isEmpty())) {
                 System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
-                throw new RuntimeException("The word is not known");
+                System.out.println("The word is not known");
+                return;
             }
+            // if the top of the pile is a terminal but the top of the word pile isn't the same we have a problem the word is not known
             if (isTerminal(pile.peek()) && !pile.peek().equals(wordPile.peek())) {
                 System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
-                throw new RuntimeException("The word is not accepted");
+                System.out.println("The word is not known");
+                return;
             }
+            // if the top of the pile is a terminal and the top of the word pile is the same we pop the pile and the word pile
             if (pile.peek().equals(wordPile.peek())) {
                 System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile + "\t\t\t\t\t\t\t\t\tOOOUUUFFFFF");
                 pile.pop();
                 wordPile.pop();
+                // When both piles are empty we have a word
                 if (pile.isEmpty() && wordPile.isEmpty()) {
                     System.out.println(pile + "\t\t\t\t\t\t\t\t\t" + wordPile);
                     System.out.println("The word is accepted");
+                    return;
                 }
+                // if the top of the pile is a non terminal we have to look at the table
             } else if (table.containsCouple(pile.peek(), wordPile.peek())) {
                 TableCell tmp = table.getRegleForCouple(pile.peek(), wordPile.peek());
                 pile.pop();
+                // we add the rule obtained from the table to the pile (in reverse order)
                 for (int i = tmp.regle.right.size() - 1; i >= 0; i--) {
                     if (!tmp.regle.right.get(i).equals(" ")) {
                         pile.push(tmp.regle.right.get(i));
@@ -225,13 +247,4 @@ public class Helper {
     }
 
 
-    public Stack<String> wordToStack(String word) {
-        Stack<String> tmp = new Stack<String>();
-        tmp.push("$");
-        for (int i = word.length() - 1; i >= 0; i--) {
-            if (word.charAt(i) != ' ')
-                tmp.push(word.charAt(i) + "");
-        }
-        return tmp;
-    }
 }

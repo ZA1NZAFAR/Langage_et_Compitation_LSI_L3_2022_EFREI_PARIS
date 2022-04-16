@@ -24,6 +24,8 @@ public class Mainn {
         System.out.println("Table : \n" + descendingAnalyzerTable + "\n");
 
         System.out.println("Word is known? : ");
-        helper.wordIsKnown(descendingAnalyzerTable, "(((i)))");
+        helper.wordIsKnown(descendingAnalyzerTable, " ( ( ( ii )))");
+
+
     }
 }
