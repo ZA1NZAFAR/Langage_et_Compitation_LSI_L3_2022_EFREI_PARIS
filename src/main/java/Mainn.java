@@ -21,7 +21,7 @@ public class Mainn {
             System.out.println(
                     "\nMain Menu: " +
                             "\n0- to exit" +
-                            "\n1- to choose a file and transform it into a usable grammar (if it's already usable, nothing will happen (don't worry..)" +
+                            "\n1- to choose a file and transform it into a usable grammar (if it's already usable, nothing will happen (don't worry..))" +
                             "\n2- to calculate firsts of the given grammmar" +
                             "\n3- to calculate follows of the given grammmar" +
                             "\n4- to calculate table of the given grammmar" +
@@ -45,24 +45,33 @@ public class Mainn {
                     if (grammar == null)
                         System.out.println("༼☯﹏☯༽ Please read a grammar first ! Sooo maybe you can press 1 this time ?...");
                     else
-                        Tools.displayFirstsOrFollows("Firsts", helper.calculateFirsts(grammar));
+                    {
+                        firsts = helper.calculateFirsts(grammar);
+                        Tools.displayFirstsOrFollows("Firsts", firsts);
+                    }
                     break;
                 case 3:
                     if (grammar == null)
                         System.out.println("༼☯﹏☯༽ Please read a grammar first ! Sooo maybe you can press 1 this time ?...");
                     else
-                        Tools.displayFirstsOrFollows("Follows", helper.calculateFollows(grammar));
+                    {
+                        follows = helper.calculateFollows(grammar);
+                        Tools.displayFirstsOrFollows("Follows", follows);
+                    }
                     break;
                 case 4:
                     if (grammar == null || firsts == null || follows == null)
                         System.out.println("୧༼ಠ益ಠ༽୨ No, no, no !... Grammar have to be choose (if you haven't already choose it ჴ˘ര‸രჴ), and firsts + follows MUST BE calculated first ! ");
                     else
-                        helper.getDescendingAnalyzerTable(grammar, firsts, follows);
+                    {
+                        descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
+                        Tools.displayTable(descendingAnalyzerTable, grammar);
+                    }
                     break;
                 case 5:
                     System.out.println("Type the word you want to check : ");
                     String scan = scanner.next();
-                    helper.wordIsKnown(descendingAnalyzerTable, scan);
+                    helper.wordIsKnown(descendingAnalyzerTable, scan, grammar);
                     break;
                 case 6:
                     System.out.println("\n READY ?! GOOOO ᕕ༼ •̀︿•́༽ᕗ \n ");
@@ -78,7 +87,7 @@ public class Mainn {
                     descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
                     Tools.displayTable(descendingAnalyzerTable, grammar);
 
-                    helper.wordIsKnown(descendingAnalyzerTable, "(((i)))");
+                    helper.wordIsKnown(descendingAnalyzerTable, "(((i)))", grammar);
                     break;
                 case 7 :
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t~~~ The list of rules ~~~ \n\n\n" +
@@ -110,7 +119,7 @@ public class Mainn {
                     descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
                     Tools.displayTable(descendingAnalyzerTable, grammar);
 
-                    helper.wordIsKnown(descendingAnalyzerTable, "(((i)))");
+                    helper.wordIsKnown(descendingAnalyzerTable, "(((i)))", grammar);
                     break;
             }
         }

@@ -2,4 +2,4 @@ E->TD
 D->+TD | eps
 T->FY
 Y->*FY | eps
-F->(E) | id
+F->(E) | i

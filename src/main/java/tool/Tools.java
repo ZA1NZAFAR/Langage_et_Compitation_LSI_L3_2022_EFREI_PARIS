@@ -176,6 +176,11 @@ public class Tools {
      * @param grammar the grammar used to generate the table
      */
     public static void displayTable(Table table, Grammar grammar) {
+        if(table == null)
+        {
+            System.out.println("Unable to display the table(the table is null/empty)");
+            return;
+        }
         displayLoading("Generating table");
         String format = "%-20.20s";  // fixed size 10 characters, left aligned
 

@@ -158,7 +158,10 @@ public class Helper {
                 for (String s : follows.get(regle.getLeft())) {
                     TableCell tmp = new TableCell(regle.getLeft(), s, regle);
                     if (table.containsCouple(regle.getLeft(), s))
-                        throw new RuntimeException("There can't be two rules with the same left side and first");
+                    {
+                        System.out.println("\nThere can't be two rules with the same left side and first");
+                        return null;
+                    }
                     else
                         table.add(tmp);
                 }
@@ -185,11 +188,16 @@ public class Helper {
         return table;
     }
 
-    public void wordIsKnown(Table table, String word) {
+    public void wordIsKnown(Table table, String word, Grammar grammar) {
+        if(table == null)
+        {
+            System.out.println("Unable to check if the word is known (the table is null/empty)");
+            return;
+        }
         Tools.displayLoading("Launching word analysis for " + word);
         Stack<String> pile = new Stack<>();
         pile.push("$");
-        pile.push("E");
+        pile.push(grammar.getStartSymbol());
         Stack<String> wordPile = Tools.wordToStack(word);
 
         Stack<String> lastTurnPile = new Stack<>();
@@ -227,7 +235,7 @@ public class Helper {
             }
             // if the top of the pile is a terminal and the top of the word pile is the same we pop the pile and the word pile
             if (pile.peek().equals(wordPile.peek())) {
-                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "OUFFF");
                 pile.pop();
                 wordPile.pop();
                 // When both piles are empty we have a word
