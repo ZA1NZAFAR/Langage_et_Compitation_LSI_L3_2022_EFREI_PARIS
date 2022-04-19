@@ -115,8 +115,6 @@ public class Mainn {
 
                     descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
                     Tools.displayTable(descendingAnalyzerTable, grammar);
-
-                    helper.wordIsKnown(descendingAnalyzerTable, "(((i)))", grammar);
                     break;
             }
         }
