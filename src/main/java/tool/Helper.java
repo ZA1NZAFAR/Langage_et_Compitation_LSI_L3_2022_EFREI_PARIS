@@ -42,10 +42,10 @@ public class Helper {
     }
 
     /**
-     * Calculates the follows for all nonTerminals in a grammar and returns them in a HashMap with the key being the nonTerminal
+     * Calculates the firsts for all nonTerminals in a grammar and returns them in a HashMap with the key being the nonTerminal
      *
-     * @param grammar the grammar to calculate the follows for
-     * @return a HashMap with the key being the nonTerminal and the value being the follows
+     * @param grammar the grammar to calculate the firsts for
+     * @return a HashMap with the key being the nonTerminal and the value being the firsts
      */
     public HashMap<String, Set<String>> calculateFirsts(Grammar grammar) {
         HashMap<String, Set<String>> firsts = new HashMap<>();
@@ -59,7 +59,7 @@ public class Helper {
      * Calculates the firsts for a nonTerminal in a grammar and returns them in a HashSet
      *
      * @param left    the nonTerminal to calculate the firsts for
-     * @param regles  the grammar to calculate the firsts for
+     * @param regles  the rules to calculate the firsts for
      * @param grammar the grammar to calculate the firsts for
      * @return a HashSet with the firsts of the nonTerminal
      */
@@ -128,7 +128,7 @@ public class Helper {
 
                             for (String s : regle.right.subList(i + 1, regle.right.size())) {
 
-                                //if all symbols following the current symbol can dissapear then add follows of left side
+                                //if all symbols following the current symbol can disappear then add follows of left side
                                 for (int j = i + 1; j < regle.right.size(); j++) {
                                     if (j == regle.right.size() - 1) {
                                         follows.addAll(Tools.removeEpsilon(calculateFollows(regle.left, regles, grammar)));
@@ -137,7 +137,7 @@ public class Helper {
                                         break;
                                 }
 
-                                // if current symbol can dissapear we also take the firsts of the next symbol
+                                // if current symbol can disappear we also take the firsts of the next symbol
                                 follows.addAll(Tools.removeEpsilon(calculateFirsts(s, regles, grammar)));
                                 if (!grammar.doesGiveEpsilon(s))
                                     break;
@@ -221,7 +221,7 @@ public class Helper {
                 Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
 
             }
-            // if one pile is empty and the other isn't  the word is not known
+            // if one pile is empty and the other isn't, the word is not known
             if ((pile.isEmpty() && !wordPile.isEmpty()) || (!pile.isEmpty() && wordPile.isEmpty())) {
                 Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "");
                 System.out.println("The word is not known");

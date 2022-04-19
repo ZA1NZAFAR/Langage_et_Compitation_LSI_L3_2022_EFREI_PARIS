@@ -13,7 +13,7 @@ import java.util.*;
 public class Tools {
 
     /**
-     * Returns if a given string is a Terminal or not (a Terminal is a string that contains only one capital character)
+     * Returns if a given string is a Terminal or not (a Terminal is anything other than an upper case letter or an upper case letter + apostrophe)
      *
      * @param symbol the string to test
      * @return true if the string is a Terminal, false otherwise
@@ -37,7 +37,7 @@ public class Tools {
 
 
     /**
-     * Removes the epsilon from the productions from a grammar
+     * Removes the epsilon from the productions of a grammar
      *
      * @param list the list of productions to remove the epsilon productions from
      * @return the list of productions without the epsilon productions
