@@ -74,6 +74,8 @@ public class Helper {
                     firsts.add(regle.getRight().get(0));
                 } else {
                     for (String s : regle.right) {
+                        if (isTerminal(s) && !s.equals("eps"))
+                            firsts.add(s);
                         if (!isTerminal(s) && !s.equals(left))
                             firsts.addAll(calculateFirsts(s, grammar.getAllProductionsOf(s), grammar));
                         if (!Tools.hasEpsilonAsFirst(s, grammar) && !isTerminal(s))

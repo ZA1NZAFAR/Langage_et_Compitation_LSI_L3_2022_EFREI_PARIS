@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.*;
 
 public class Tools {
@@ -57,8 +58,9 @@ public class Tools {
      */
     public static Grammar readFileToGrammar(String fileName) throws FileNotFoundException {
         Grammar grammar = new Grammar();
-        BufferedReader br = new BufferedReader(new FileReader(fileName));
         try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+
             String line = br.readLine();
             grammar.setStartSymbol(String.valueOf(line.charAt(0)));
             while (line != null) {
@@ -74,8 +76,12 @@ public class Tools {
                 }
                 line = br.readLine();
             }
+        } catch (NoSuchFileException e) {
+            System.out.println("File not found! Please put the file in the same directory as the program or provide the absolute path to the file.");
+            return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Unknown error while reading the file.");
+            return null;
         }
         grammar.setTerminals(Tools.getTerminals(grammar));
         grammar.setNonTerminals(Tools.getNonTerminals(grammar));
