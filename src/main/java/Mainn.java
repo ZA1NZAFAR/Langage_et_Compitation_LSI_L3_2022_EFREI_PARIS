@@ -44,8 +44,7 @@ public class Mainn {
                 case 2:
                     if (grammar == null)
                         System.out.println("༼☯﹏☯༽ Please read a grammar first ! Sooo maybe you can press 1 this time ?...");
-                    else
-                    {
+                    else {
                         firsts = helper.calculateFirsts(grammar);
                         Tools.displayFirstsOrFollows("Firsts", firsts);
                     }
@@ -53,8 +52,7 @@ public class Mainn {
                 case 3:
                     if (grammar == null)
                         System.out.println("༼☯﹏☯༽ Please read a grammar first ! Sooo maybe you can press 1 this time ?...");
-                    else
-                    {
+                    else {
                         follows = helper.calculateFollows(grammar);
                         Tools.displayFirstsOrFollows("Follows", follows);
                     }
@@ -62,8 +60,7 @@ public class Mainn {
                 case 4:
                     if (grammar == null || firsts == null || follows == null)
                         System.out.println("୧༼ಠ益ಠ༽୨ No, no, no !... Grammar have to be choose (if you haven't already choose it ჴ˘ര‸രჴ), and firsts + follows MUST BE calculated first ! ");
-                    else
-                    {
+                    else {
                         descendingAnalyzerTable = helper.getDescendingAnalyzerTable(grammar, firsts, follows);
                         Tools.displayTable(descendingAnalyzerTable, grammar);
                     }
@@ -89,7 +86,7 @@ public class Mainn {
 
                     helper.wordIsKnown(descendingAnalyzerTable, "(((i)))", grammar);
                     break;
-                case 7 :
+                case 7:
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t~~~ The list of rules ~~~ \n\n\n" +
                             "➮ Rule 1: a String (symbol) is said terminal if it's a letter in lower case, and conversely a symbol is said not terminal if it's a letter in upper case\n" +
                             "➮ Rule 2: We can therefore deduce from the first rule that a series of lower case letters is considered like unique not terminal symbol \n" +
@@ -98,7 +95,7 @@ public class Mainn {
                             "➮ Rule 5: epsilon (eps) isn't considered as a terminal state, nor as a non-terminal symbol\n" +
                             "➮ Rule 6: A grammar with a left recursion cannot be studied, we must remove the recursion before (a grammar with a right recursion is not considered as we didn't study it in class\n" +
                             "\n" +
-                            "◌ The other rules like concerning the calculation of the first and the following symbols are the same as those studied in class\n\n"+
+                            "◌ The other rules like concerning the calculation of the first and the following symbols are the same as those studied in class\n\n" +
                             "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t=== THE END ===\n\n" +
                             "*** Let’s pick up where we left off ? ٩(◕‿◕｡)۶"
                     );

@@ -176,8 +176,7 @@ public class Tools {
      * @param grammar the grammar used to generate the table
      */
     public static void displayTable(Table table, Grammar grammar) {
-        if(table == null)
-        {
+        if (table == null) {
             System.out.println("Unable to display the table(the table is null/empty)");
             return;
         }
@@ -241,13 +240,12 @@ public class Tools {
             if (regle.getLeft().equals(s) && regle.getRight().get(0).equals("eps")) {
                 return true;
             } else {
-                for (String right : regle.getRight()) {
+                for (int i = 0; i < regle.getRight().size(); i++) {
+                    String right = regle.getRight().get(i);
+                    if (i == regle.right.size() - 1 && grammar.doesGiveEpsilon(right) && isTerminal(right))
+                        return true;
                     if (isTerminal(right))
                         return false;
-                    else {
-                        if (hasEpsilonAsFirst(right, grammar))
-                            return true;
-                    }
                 }
             }
         }

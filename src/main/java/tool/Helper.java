@@ -235,7 +235,7 @@ public class Helper {
             }
             // if the top of the pile is a terminal and the top of the word pile is the same we pop the pile and the word pile
             if (pile.peek().equals(wordPile.peek())) {
-                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "OUFFF");
+                Tools.alignAndDisplay(pile.toString(), wordPile.toString(), "Suppression de la pile");
                 pile.pop();
                 wordPile.pop();
                 // When both piles are empty we have a word
