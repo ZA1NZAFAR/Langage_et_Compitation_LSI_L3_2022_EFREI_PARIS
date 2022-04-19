@@ -1,0 +1,6 @@
+S -> ABCDE
+A -> a | eps
+B -> b |eps
+C -> c
+D -> d |eps
+E -> e | eps
