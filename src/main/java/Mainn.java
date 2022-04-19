@@ -89,11 +89,10 @@ public class Mainn {
                 case 7:
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t~~~ The list of rules ~~~ \n\n\n" +
                             "➮ Rule 1: a String (symbol) is said terminal if it's a letter in lower case, and conversely a symbol is said not terminal if it's a letter in upper case\n" +
-                            "➮ Rule 2: We can therefore deduce from the first rule that a series of lower case letters is considered like unique not terminal symbol \n" +
+                            "➮ Rule 2: We can therefore deduce from the first rule that each terminal/non terminal consists of a single character except Epsilon(which is noted as \"eps\". \n" +
                             "➮ Rule 3: All characters to the left of \"->\" will be considered as not terminal symbol\n" +
                             "➮ Rule 4: The start symbol is the first left character of the given grammar\n" +
-                            "➮ Rule 5: epsilon (eps) isn't considered as a terminal state, nor as a non-terminal symbol\n" +
-                            "➮ Rule 6: A grammar with a left recursion cannot be studied, we must remove the recursion before (a grammar with a right recursion is not considered as we didn't study it in class\n" +
+                            "➮ Rule 5: A grammar with a left recursion cannot be studied, so the program automatically detects and deals with it\n" +
                             "\n" +
                             "◌ The other rules like concerning the calculation of the first and the following symbols are the same as those studied in class\n\n" +
                             "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t=== THE END ===\n\n" +
@@ -104,7 +103,6 @@ public class Mainn {
                     System.out.println("Please write a file among the following : grammar.txt | grammar1.txt | grammar2.txt | grammar3.txt. \n ✨ Your choice below ✨ : ");
                     String str2 = scanner.next();
                     grammar = Tools.readFileToGrammar(str2);
-                    //grammar = Tools.readFileToGrammar("Type the name of file you want to read:");
                     Tools.displayGrammar(grammar);
 
                     firsts = helper.calculateFirsts(grammar);
