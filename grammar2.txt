@@ -1,3 +1,5 @@
-S -> Bb | Cd
-B -> aB | eps
-C -> cC|eps
+E->TD
+D->+TD | eps
+T->FY
+Y->*FY | eps
+F->(E) | eps
