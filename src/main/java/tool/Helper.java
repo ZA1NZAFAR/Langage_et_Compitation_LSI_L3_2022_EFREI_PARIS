@@ -75,8 +75,8 @@ public class Helper {
                 } else {
                     for (String s : regle.right) {
                         if (!isTerminal(s) && !s.equals(left))
-                            firsts.addAll(calculateFirsts(s, regles, grammar));
-                        if (!Tools.hasEpsilonAsFirst(s, grammar) || !grammar.doesGiveEpsilon(s))
+                            firsts.addAll(calculateFirsts(s, grammar.getAllProductionsOf(s), grammar));
+                        if (!Tools.hasEpsilonAsFirst(s, grammar) && !isTerminal(s))
                             break;
                     }
                 }
