@@ -228,4 +228,29 @@ public class Tools {
             System.out.println(regle.left + " -> " + regle.right);
         }
     }
+
+    /**
+     * Checks if a nonTerminal has epsilon as first
+     *
+     * @param s       the nonTerminal to check
+     * @param grammar the grammar to check in
+     * @return true if the nonTerminal has epsilon as first
+     */
+    public static boolean hasEpsilonAsFirst(String s, Grammar grammar) {
+        for (Regle regle : grammar.getProductions()) {
+            if (regle.getLeft().equals(s) && regle.getRight().get(0).equals("eps")) {
+                return true;
+            } else {
+                for (String right : regle.getRight()) {
+                    if (isTerminal(right))
+                        return false;
+                    else {
+                        if (hasEpsilonAsFirst(right, grammar))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
