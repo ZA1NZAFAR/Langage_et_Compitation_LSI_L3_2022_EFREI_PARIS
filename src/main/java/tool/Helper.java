@@ -49,10 +49,38 @@ public class Helper {
      */
     public HashMap<String, Set<String>> calculateFirsts(Grammar grammar) {
         HashMap<String, Set<String>> firsts = new HashMap<>();
-        for (Regle regle : grammar.getProductions()) {
-            firsts.put(regle.getLeft(), calculateFirsts(regle.getLeft(), grammar.getProductions(), grammar));
+        for (String symbol : grammar.getNonTerminals()) {
+            firsts.put(symbol, calculateFirsts(symbol, grammar.getProductions(), grammar));
+            if (hasEpsilonAsFirst(symbol, grammar)) {
+                firsts.get(symbol).add("eps");
+            }
         }
         return firsts;
+    }
+
+    /**
+     * Checks if a nonTerminal has epsilon as first
+     *
+     * @param s       the nonTerminal to check
+     * @param grammar the grammar to check in
+     * @return true if the nonTerminal has epsilon as first
+     */
+    public boolean hasEpsilonAsFirst(String s, Grammar grammar) {
+        for (Regle regle : grammar.getProductions()) {
+            if (regle.getLeft().equals(s) && regle.getRight().get(0).equals("eps")) {
+                return true;
+            } else {
+                for (String right : regle.getRight()) {
+                    if (isTerminal(right))
+                        return false;
+                    else {
+                        if (hasEpsilonAsFirst(right, grammar))
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -67,7 +95,7 @@ public class Helper {
         Set<String> firsts = new HashSet<>();
         for (Regle regle : regles) {
             if (regle.getLeft().equals(left)) {
-                if (isTerminal(regle.getRight().get(0))) {
+                if (isTerminal(regle.getRight().get(0)) && !regle.getRight().get(0).equals("eps")) {
                     firsts.add(regle.getRight().get(0));
                 } else {
                     for (String s : regle.right) {
@@ -157,12 +185,10 @@ public class Helper {
             if (regle.right.get(0).equals("eps")) {
                 for (String s : follows.get(regle.getLeft())) {
                     TableCell tmp = new TableCell(regle.getLeft(), s, regle);
-                    if (table.containsCouple(regle.getLeft(), s))
-                    {
+                    if (table.containsCouple(regle.getLeft(), s)) {
                         System.out.println("\nThere can't be two rules with the same left side and first");
                         return null;
-                    }
-                    else
+                    } else
                         table.add(tmp);
                 }
                 continue;
@@ -189,8 +215,7 @@ public class Helper {
     }
 
     public void wordIsKnown(Table table, String word, Grammar grammar) {
-        if(table == null)
-        {
+        if (table == null) {
             System.out.println("Unable to check if the word is known (the table is null/empty)");
             return;
         }
