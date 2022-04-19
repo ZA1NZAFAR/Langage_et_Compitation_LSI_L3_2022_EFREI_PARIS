@@ -119,7 +119,7 @@ public class Mainn {
                         break;
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Wooah ! You didn't write a number. Please write a number.\n");
+                System.out.println("Wooah ! /!\\ You didn't write a number. Please write a number.\n");
                 scanner = new Scanner(System.in);
             }
         }
