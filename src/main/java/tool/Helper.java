@@ -76,7 +76,7 @@ public class Helper {
                     for (String s : regle.right) {
                         if (!isTerminal(s) && !s.equals(left))
                             firsts.addAll(calculateFirsts(s, regles, grammar));
-                        if (!grammar.doesGiveEpsilon(s))
+                        if (!Tools.hasEpsilonAsFirst(s, grammar))
                             break;
                     }
                 }

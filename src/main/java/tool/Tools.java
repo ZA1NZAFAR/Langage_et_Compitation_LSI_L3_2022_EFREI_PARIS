@@ -236,19 +236,24 @@ public class Tools {
      * @return true if the nonTerminal has epsilon as first
      */
     public static boolean hasEpsilonAsFirst(String s, Grammar grammar) {
+        boolean res = false;
+        outerloop:
         for (Regle regle : grammar.getProductions()) {
             if (regle.getLeft().equals(s) && regle.getRight().get(0).equals("eps")) {
-                return true;
+                res = true;
+                break;
             } else {
                 for (int i = 0; i < regle.getRight().size(); i++) {
                     String right = regle.getRight().get(i);
-                    if (i == regle.right.size() - 1 && grammar.doesGiveEpsilon(right) && isTerminal(right))
-                        return true;
+                    if (i == regle.right.size() - 1 && grammar.doesGiveEpsilon(right) && !isTerminal(right)) {
+                        res = true;
+                        break outerloop;
+                    }
                     if (isTerminal(right))
-                        return false;
+                        res = false;
                 }
             }
         }
-        return false;
+        return res;
     }
 }

@@ -72,7 +72,7 @@ public class Mainn {
                     break;
                 case 6:
                     System.out.println("\n READY ?! GOOOO ᕕ༼ •̀︿•́༽ᕗ \n ");
-                    grammar = Tools.readFileToGrammar("grammar1.txt");
+                    grammar = Tools.readFileToGrammar("grammar2.txt");
                     Tools.displayGrammar(grammar);
 
                     firsts = helper.calculateFirsts(grammar);
