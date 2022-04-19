@@ -174,17 +174,19 @@ public class Helper {
             //S > Tps
             if (isTerminal(regle.getRight().get(0))) {
                 TableCell tmp = new TableCell(regle.getLeft(), regle.getRight().get(0), regle);
-                if (table.containsCouple(regle.getLeft(), regle.getRight().get(0)))
-                    throw new RuntimeException("There can't be two rules with the same left side and first");
-                else
+                if (table.containsCouple(regle.getLeft(), regle.getRight().get(0))) {
+                    System.out.println("\nThere can't be two rules with the same left side and first");
+                    return null;
+                } else
                     table.add(tmp);
                 continue;
             }
             for (String s : firsts.get(regle.getRight().get(0))) {
                 TableCell tmp = new TableCell(regle.getLeft(), s, regle);
-                if (table.containsCouple(regle.getLeft(), s))
-                    throw new RuntimeException("There can't be two rules with the same left side and first");
-                else
+                if (table.containsCouple(regle.getLeft(), s)) {
+                    System.out.println("\nThere can't be two rules with the same left side and first");
+                    return null;
+                } else
                     table.add(tmp);
             }
         }
