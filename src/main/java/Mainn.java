@@ -90,9 +90,10 @@ public class Mainn {
                     System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t~~~ The list of rules ~~~ \n\n\n" +
                             "➮ Rule 1: a String (symbol) is said terminal if it's a letter in lower case, and conversely a symbol is said not terminal if it's a letter in upper case\n" +
                             "➮ Rule 2: We can therefore deduce from the first rule that each terminal/non terminal consists of a single character except Epsilon(which is noted as \"eps\". \n" +
-                            "➮ Rule 3: All characters to the left of \"->\" will be considered as not terminal symbol\n" +
-                            "➮ Rule 4: The start symbol is the first left character of the given grammar\n" +
-                            "➮ Rule 5: A grammar with a left recursion cannot be studied, so the program automatically detects and deals with it\n" +
+                            "➮ Rule 3: The program doesn't consider white spaces. They are simply ignored. \n" +
+                            "➮ Rule 4: All characters to the left of \"->\" will be considered as not terminal symbol.\n" +
+                            "➮ Rule 5: The start symbol is the first left character of the given grammar.\n" +
+                            "➮ Rule 6: A grammar with a left recursion cannot be studied, so the program automatically detects and deals with it.\n" +
                             "\n" +
                             "◌ The other rules like concerning the calculation of the first and the following symbols are the same as those studied in class\n\n" +
                             "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t=== THE END ===\n\n" +
