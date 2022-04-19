@@ -237,8 +237,7 @@ public class Tools {
      */
     public static boolean hasEpsilonAsFirst(String s, Grammar grammar) {
         boolean res = false;
-        outerloop:
-        for (Regle regle : grammar.getProductions()) {
+        for (Regle regle : grammar.getAllProductionsOf(s)) {
             if (regle.getLeft().equals(s) && regle.getRight().get(0).equals("eps")) {
                 res = true;
                 break;
@@ -246,11 +245,12 @@ public class Tools {
                 for (int i = 0; i < regle.getRight().size(); i++) {
                     String right = regle.getRight().get(i);
                     if (i == regle.right.size() - 1 && grammar.doesGiveEpsilon(right) && !isTerminal(right)) {
-                        res = true;
-                        break outerloop;
+                        return true;
                     }
-                    if (isTerminal(right))
+                    if (isTerminal(right) || !grammar.doesGiveEpsilon(right)) {
                         res = false;
+                        break;
+                    }
                 }
             }
         }
