@@ -43,6 +43,12 @@ public class Grammar {
     }
 
 
+    /**
+     * Returns all productions of a given non-terminal
+     *
+     * @param nonTerminal given non-terminal
+     * @return
+     */
     public List<Regle> getAllProductionsOf(String nonTerminal) {
         List<Regle> regles = new java.util.ArrayList<>();
         for (Regle regle : this.regles) {
@@ -104,7 +110,7 @@ public class Grammar {
         this.regles = regles;
     }
 
-    public void addTerminal(String $) {
-        this.terminals.add($);
+    public void addTerminal(String s) {
+        this.terminals.add(s);
     }
 }
