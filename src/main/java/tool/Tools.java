@@ -69,7 +69,7 @@ public class Tools {
                     String[] secondCut = firstCut[1].split("\\|");
                     for (String part : secondCut) {
                         if (part.contains("eps"))
-                            grammar.getProductions().add(new Regle(firstCut[0].trim(), com.sun.tools.javac.util.List.of("eps")));
+                            grammar.getProductions().add(new Regle(firstCut[0].trim(), List.of("eps")));
                         else
                             grammar.getProductions().add(new Regle(firstCut[0].trim(), Arrays.asList(part.trim().split(""))));
                     }
